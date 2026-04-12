@@ -21,6 +21,7 @@ export class RsvpService {
         invitationId: invitation.id,
         name: dto.name,
         email: dto.email,
+        phone: dto.phone,
         guestsCount: dto.guestsCount,
         status: dto.status,
         message: dto.message,

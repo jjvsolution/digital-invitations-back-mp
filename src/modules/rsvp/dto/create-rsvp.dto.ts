@@ -13,6 +13,11 @@ export class CreateRsvpDto {
   @IsString()
   email?: string;
 
+  @ApiProperty({ example: '+56912345678', required: false })
+  @IsOptional()
+  @IsString()
+  phone?: string;
+
   @ApiProperty({ example: 2 })
   @IsInt()
   @Min(1)

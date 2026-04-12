@@ -123,6 +123,7 @@ model Rsvp {
   invitationId  String
   name          String
   email         String?
+  phone         String?
   guestsCount  Int        @default(1)
   status        RsvpStatus
   message       String?
