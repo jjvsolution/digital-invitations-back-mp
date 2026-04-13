@@ -1,5 +1,6 @@
 datasource db {
   provider = "postgresql"
+  schemas = ["digital-invitations"]
 }
 
 generator client {
@@ -16,17 +17,20 @@ enum EventType {
   MATRIMONIO
   BABY_SHOWER
   FIESTA
+  @@schema("digital-invitations")
 }
 
 enum InvitationStatus {
   DRAFT
   PUBLISHED
+  @@schema("digital-invitations")
 }
 
 enum RsvpStatus {
   CONFIRMED
   DECLINED
   MAYBE
+  @@schema("digital-invitations")
 }
 
 //////////////////////////////////////
@@ -39,6 +43,7 @@ model User {
   name         String?
   invitations  Invitation[]
   createdAt    DateTime      @default(now())
+  @@schema("digital-invitations")
 }
 
 //////////////////////////////////////
@@ -55,6 +60,7 @@ model Template {
   createdAt        DateTime @default(now())
 
   invitations      Invitation[]
+  @@schema("digital-invitations")
 }
 
 //////////////////////////////////////
@@ -93,6 +99,7 @@ model Invitation {
 
   createdAt     DateTime           @default(now())
   updatedAt     DateTime           @updatedAt
+  @@schema("digital-invitations")
 }
 
 //////////////////////////////////////
@@ -111,6 +118,7 @@ model Photo {
   createdAt    DateTime @default(now())
 
   @@index([invitationId])
+  @@schema("digital-invitations")
 }
 
 
@@ -131,6 +139,7 @@ model Rsvp {
   invitation    Invitation @relation(fields: [invitationId], references: [id])
 
   createdAt     DateTime @default(now())
+  @@schema("digital-invitations")
 }
 
 //////////////////////////////////////
@@ -147,6 +156,7 @@ model MusicSuggestion {
   invitation    Invitation @relation(fields: [invitationId], references: [id])
 
   createdAt     DateTime @default(now())
+  @@schema("digital-invitations")
 }
 
 //////////////////////////////////////
@@ -163,4 +173,5 @@ model GiftSuggestion {
   invitation    Invitation @relation(fields: [invitationId], references: [id])
 
   createdAt     DateTime @default(now())
+  @@schema("digital-invitations")
 }
