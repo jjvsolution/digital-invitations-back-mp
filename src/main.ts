@@ -1,10 +1,12 @@
-import { ValidationPipe } from "@nestjs/common";
-import { NestFactory } from "@nestjs/core";
-import { SwaggerModule, DocumentBuilder } from "@nestjs/swagger";
-import { AppModule } from "./app.module";
+import { ValidationPipe } from '@nestjs/common';
+import { NestFactory } from '@nestjs/core';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import { AppModule } from './app.module';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
+  const app = await NestFactory.create(AppModule, {
+    logger: ['error', 'warn', 'log', 'debug', 'verbose'],
+  });
 
   app.enableCors();
   app.useGlobalPipes(
@@ -16,13 +18,13 @@ async function bootstrap() {
   );
 
   const config = new DocumentBuilder()
-    .setTitle("Invitations API")
-    .setDescription("API para invitaciones con plantillas")
-    .setVersion("1.0")
+    .setTitle('Invitations API')
+    .setDescription('API para invitaciones con plantillas')
+    .setVersion('1.0')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup("docs", app, document);
+  SwaggerModule.setup('docs', app, document);
 
   await app.listen(process.env.PORT || 3000);
 }
