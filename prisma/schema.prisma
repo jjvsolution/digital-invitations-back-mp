@@ -33,6 +33,14 @@ enum RsvpStatus {
   @@schema("digital-invitations")
 }
 
+enum GuestSendMethod {
+  WA_ME
+  CLOUD_API
+  /** Marcado manual en el panel (envío por WhatsApp fuera del sistema o ya hecho) */
+  MANUAL
+  @@schema("digital-invitations")
+}
+
 //////////////////////////////////////
 // USER (opcional para MVP, recomendado)
 //////////////////////////////////////
@@ -96,6 +104,7 @@ model Invitation {
   rsvps         Rsvp[]
   musicSuggestions MusicSuggestion[]
   giftSuggestions  GiftSuggestion[]
+  invitationGuests InvitationGuest[]
 
   createdAt     DateTime           @default(now())
   updatedAt     DateTime           @updatedAt
@@ -173,5 +182,31 @@ model GiftSuggestion {
   invitation    Invitation @relation(fields: [invitationId], references: [id])
 
   createdAt     DateTime @default(now())
+  @@schema("digital-invitations")
+}
+
+//////////////////////////////////////
+// INVITATION GUESTS (difusión / Excel)
+//////////////////////////////////////
+
+model InvitationGuest {
+  id               String   @id @default(uuid())
+  invitationId     String
+  firstName        String
+  lastName         String
+  /** E.164, ej. +5491123456789 */
+  phone            String
+  messageOverride  String?
+
+  lastSentAt       DateTime?
+  lastSendMethod   GuestSendMethod?
+  lastError        String?
+
+  invitation       Invitation @relation(fields: [invitationId], references: [id], onDelete: Cascade)
+
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+
+  @@index([invitationId])
   @@schema("digital-invitations")
 }

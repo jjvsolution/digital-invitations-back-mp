@@ -10,6 +10,7 @@ import { MusicModule } from './modules/music/music.module';
 import { GiftsModule } from './modules/gifts/gifts.module';
 import { PhotosModule } from './modules/photos/photos.module';
 import { DriveModule } from './modules/drive/drive.module';
+import { GuestsModule } from './modules/guests/guests.module';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({
@@ -26,6 +27,7 @@ import { ConfigModule } from '@nestjs/config';
     GiftsModule,
     PhotosModule,
     DriveModule,
+    GuestsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
