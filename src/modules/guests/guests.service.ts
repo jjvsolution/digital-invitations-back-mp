@@ -50,8 +50,8 @@ export class GuestsService {
 
     const data = rows.map((r) => ({
       invitationId,
-      firstName: r.firstName.trim() || "—",
-      lastName: r.lastName.trim() || "—",
+      firstName: r.firstName.trim() || "",
+      lastName: r.lastName.trim() || "",
       phone: toE164(r.phone),
       messageOverride: r.messageOverride?.trim() || null,
     }));
