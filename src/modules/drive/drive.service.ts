@@ -7,20 +7,35 @@ export class DriveService {
   private drive: drive_v3.Drive;
 
   constructor() {
-    const privateKey = (process.env.GOOGLE_DRIVE_PRIVATE_KEY ?? '').replace(
-      /\\n/g,
-      '\n',
-    );
+    if (
+      process.env.GOOGLE_CLIENT_ID &&
+      process.env.GOOGLE_CLIENT_SECRET &&
+      process.env.GOOGLE_REFRESH_TOKEN
+    ) {
+      const oauth2Client = new google.auth.OAuth2(
+        process.env.GOOGLE_CLIENT_ID,
+        process.env.GOOGLE_CLIENT_SECRET,
+      );
+      oauth2Client.setCredentials({
+        refresh_token: process.env.GOOGLE_REFRESH_TOKEN,
+      });
+      this.drive = google.drive({ version: 'v3', auth: oauth2Client });
+    } else {
+      const privateKey = (process.env.GOOGLE_DRIVE_PRIVATE_KEY ?? '').replace(
+        /\\n/g,
+        '\n',
+      );
 
-    const auth = new google.auth.GoogleAuth({
-      credentials: {
-        client_email: process.env.GOOGLE_DRIVE_CLIENT_EMAIL,
-        private_key: privateKey,
-      },
-      scopes: ['https://www.googleapis.com/auth/drive'],
-    });
+      const auth = new google.auth.GoogleAuth({
+        credentials: {
+          client_email: process.env.GOOGLE_DRIVE_CLIENT_EMAIL,
+          private_key: privateKey,
+        },
+        scopes: ['https://www.googleapis.com/auth/drive'],
+      });
 
-    this.drive = google.drive({ version: 'v3', auth });
+      this.drive = google.drive({ version: 'v3', auth });
+    }
   }
 
   async uploadFile(

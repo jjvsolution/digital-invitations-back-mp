@@ -21,7 +21,8 @@
     "prisma:generate": "prisma generate",
     "prisma:db:push": "prisma db push",
     "prisma:db:pull": "prisma db pull",
-    "prisma:db:seed": "npx prisma db seed"
+    "prisma:db:seed": "npx prisma db seed",
+    "get:token": "node scripts/get-refresh-token.js"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"
