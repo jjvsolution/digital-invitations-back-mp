@@ -53,6 +53,7 @@ export class DriveService {
       });
       fileId = res.data.id!;
     } catch (err: any) {
+      console.log(err);
       throw new InternalServerErrorException(
         `Error subiendo a Drive: ${err?.message ?? err}`,
       );
